@@ -4,7 +4,7 @@ import React from 'react';
 const MovieList = ({movies}) => (
   <div className="movie-list">
     {movies.map((movie) => (
-      <MovieListEntry movie={movie} />
+      <MovieListEntry key={movie.title} movie={movie} />
       )
     )}
   </div>

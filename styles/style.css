@@ -1,0 +1,15 @@
+.header {
+    
+    height: 50px;
+    background-color: gainsboro;
+    
+}
+
+.main-content {
+    
+}
+
+div.movie-list-entry {
+    margin: 5px;
+    padding: 5px;
+    border: 10px black;
