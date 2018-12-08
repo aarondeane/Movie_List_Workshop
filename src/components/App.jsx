@@ -9,6 +9,7 @@ import Input from './Input.jsx';
 class App extends React.Component {
     constructor(props) {
         super(props);
+        
         this.state = {
           movies: movies,
           search: '',
@@ -28,24 +29,33 @@ class App extends React.Component {
       this.setState({
         [name]: value
       });
+      event.preventDefault();
     }
 
     handleSearchSubmit(event) {
-      var searchedMovie = this.state.movies.filter(movie => 
+      
+      var searchedMovie = movies.filter(movie => 
         movie.title === this.state.search
         );
-
+        console.log(searchedMovie);
         if(searchedMovie.length !== 0) {
-          this.setState({movies: searchedMovie});
+          this.setState({
+            movies: searchedMovie,
+            search: ''          
+          });
         }else {
           alert('Sorry that movie can\'t be found');
         }
         event.preventDefault();
     }
+
     handleInputSubmit(event) {
       if(this.state.input !== '') {
         this.state.movies.push({title: this.state.input});
-        this.setState(this.state.movies);
+        this.setState({
+          // movies: movies,
+          input: ''
+        });
       }else {
         alert("Please enter a movie you would like to add");
       }
