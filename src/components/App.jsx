@@ -1,5 +1,5 @@
 import React from 'react';
-import { Formik } from 'formik';
+// import { Formik } from 'formik';
 // import exampleMovieData from '../data/exampleMovieData.js';
 import movies from '../data/MovieData.js';
 import MovieList from './MovieList.jsx';
@@ -13,12 +13,14 @@ class App extends React.Component {
         this.state = {
           movies: movies,
           search: '',
-          input: ''
+          input: '',
+          isToggled: false
         };
     // this.handleSearchChange = this.handleSearchChange.bind(this);
     this.handleSearchSubmit = this.handleSearchSubmit.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleInputSubmit = this.handleInputSubmit.bind(this);
+    this.handleToggle = this.handleToggle.bind(this);
     }
 
     handleInputChange(event) {
@@ -51,9 +53,8 @@ class App extends React.Component {
 
     handleInputSubmit(event) {
       if(this.state.input !== '') {
-        this.state.movies.push({title: this.state.input});
+        this.state.movies.push({image: null, title: this.state.input, description: '', isWatched: false });
         this.setState({
-          // movies: movies,
           input: ''
         });
       }else {
@@ -61,10 +62,20 @@ class App extends React.Component {
       }
       event.preventDefault();
     }
+
+    handleToggle(event) {
+      movies.forEach(movie => {
+        if(movie.title === event.target.id) {
+          movie.isWatched = !movie.isWatched;
+        }
+      });
+      this.forceUpdate();
+      event.preventDefault();
+    }
     
     render() {
       return (
-        <div>
+        <div className="container">
           <div className="header">
             <h1>Movie List</h1>
           </div>        
@@ -77,7 +88,7 @@ class App extends React.Component {
           </div>
         </div>
         <div className="main-content">
-          <MovieList movies={this.state.movies} />
+          <MovieList movies={this.state.movies} handleToggle={this.handleToggle} />
         </div>
       </div>
       );
