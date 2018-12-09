@@ -16,11 +16,12 @@ class App extends React.Component {
           input: '',
           isToggled: false
         };
-    // this.handleSearchChange = this.handleSearchChange.bind(this);
+
     this.handleSearchSubmit = this.handleSearchSubmit.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleInputSubmit = this.handleInputSubmit.bind(this);
     this.handleToggle = this.handleToggle.bind(this);
+    this.handleClick = this.handleClick.bind(this);
     }
 
     handleInputChange(event) {
@@ -34,12 +35,30 @@ class App extends React.Component {
       event.preventDefault();
     }
 
-    handleSearchSubmit(event) {
-      
+    handleClick(event) {
+      const target = event.target;
+      const value = event.target.value;
+      const name = target.name;
+      if(value === 'Watched') {
+        var watchedMovies = movies.filter(movie =>
+          movie.isWatched === true
+          );
+          this.setState({
+            movies: watchedMovies
+          });
+      }else if (value === 'All') {
+        this.setState({
+          movies: movies
+        });
+      }
+      event.preventDefault();
+      console.log(target, value, name);
+    }
+
+    handleSearchSubmit(event) {      
       var searchedMovie = movies.filter(movie => 
         movie.title === this.state.search
         );
-        console.log(searchedMovie);
         if(searchedMovie.length !== 0) {
           this.setState({
             movies: searchedMovie,
@@ -84,7 +103,7 @@ class App extends React.Component {
             <Input input={this.state.input} handleInputChange={this.handleInputChange} handleInputSubmit={this.handleInputSubmit} />
           </div>
           <div className="searchbar">
-            <Search search={this.state.search} handleInputChange={this.handleInputChange} handleSearchSubmit={this.handleSearchSubmit} />
+            <Search search={this.state.search} handleInputChange={this.handleInputChange} handleSearchSubmit={this.handleSearchSubmit} handleClick={this.handleClick} />
           </div>
         </div>
         <div className="main-content">
